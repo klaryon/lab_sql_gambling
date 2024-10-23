@@ -35,8 +35,8 @@ ON c.CustId = a.CustId;
 -- Por favor, escribe el SQL que proporcionaría el informe. 
 -- Si imaginas que esto fue un conjunto de datos mucho más grande en Excel, ¿cómo proporcionarías este informe en Excel?
 SELECT 
-	p.product, 
-	STR_TO_DATE(b.BetDate, '%d/%m/%y') AS bet_date_format, 
+    p.product, 
+    STR_TO_DATE(b.BetDate, '%d/%m/%y') AS bet_date_format, 
     SUM(b.Bet_Amt) AS total_bet
 FROM betting AS b
 JOIN product AS p
@@ -51,8 +51,8 @@ ORDER BY p.product, bet_date_format;
 -- Nuevamente, por favor escribe el SQL abajo que hará esto. 
 -- Si yo estuviera entregando esto vía Excel, ¿cómo lo haría?
 SELECT 
-	p.product, 
-	STR_TO_DATE(b.BetDate, '%d/%m/%y') AS bet_date_format, 
+    p.product, 
+    STR_TO_DATE(b.BetDate, '%d/%m/%y') AS bet_date_format, 
     SUM(b.Bet_Amt) AS total_bet
 FROM betting AS b
 JOIN product AS p
@@ -112,16 +112,14 @@ SELECT * FROM bet_acc;
 -- ¿Puedes por favor escribir 2 consultas, una que muestre el número de productos por jugador 
 -- y otra que muestre jugadores que juegan tanto en Sportsbook como en Vegas?
 
-SELECT 
-	c.FirstName, COUNT(p.product) AS products_played
+SELECT c.FirstName, COUNT(p.product) AS products_played
 FROM customer AS c
 INNER JOIN account AS a ON c.CustId = a.CustId
 INNER JOIN betting AS b ON a.AccountNo = b.AccountNo
 INNER JOIN product AS p ON b.ClassId = p.CLASSID AND b.CategoryId = p.CATEGORYID
 GROUP BY c.FirstName;
 
-SELECT 
-	c.FirstName
+SELECT c.FirstName
 FROM customer AS c
 INNER JOIN account AS a ON c.CustId = a.CustId
 INNER JOIN betting AS b ON a.AccountNo = b.AccountNo
@@ -134,8 +132,7 @@ HAVING COUNT(DISTINCT p.product) = 2;
 -- por favor escribe código SQL que muestre a los jugadores que solo juegan en sportsbook, usa bet_amt > 0 como la clave. 
 -- Muestra cada jugador y la suma de sus apuestas para ambos productos.
 
-SELECT 
-	c.FirstName, p.product
+SELECT c.FirstName, p.product
 FROM customer AS c
 INNER JOIN account AS a ON c.CustId = a.CustId
 INNER JOIN betting AS b ON a.AccountNo = b.AccountNo
@@ -148,10 +145,10 @@ HAVING COUNT(DISTINCT p.product) = 1;
 -- Esto se puede determinar por la mayor cantidad de dinero apostado. 
 -- Por favor, escribe una consulta que muestre el producto favorito de cada jugador
 
-SELECT 
-	c.FirstName, 
+SELECT
+    c.FirstName, 
     p.product, 
-	RANK() OVER (PARTITION BY c.FirstName ORDER BY COUNT(p.product) DESC) AS 'Rank'
+    RANK() OVER (PARTITION BY c.FirstName ORDER BY COUNT(p.product) DESC) AS 'Rank'
 FROM customer AS c
 INNER JOIN account AS a ON c.CustId = a.CustId
 INNER JOIN betting AS b ON a.AccountNo = b.AccountNo
